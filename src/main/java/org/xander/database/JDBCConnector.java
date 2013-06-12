@@ -27,6 +27,7 @@ public class JDBCConnector {
         checkForConnection(connection);
         WorkWithDatabase workWithDatabase = new WorkWithDatabase(connection);
         workWithDatabase.createTable();
+      //  workWithDatabase.createAnotherTable();
     }
 
     private static boolean isDriverPresent() {
