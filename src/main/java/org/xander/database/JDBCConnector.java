@@ -3,14 +3,18 @@ package org.xander.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class JDBCConnector {
     static final String DB_DRIVER = "com.mysql.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost/test";
     static final String DB_USER = "root";
-    static final String DB_PASSWORD = "xander";
+    static final String DB_PASSWORD = "password";
+    ArrayList<String> groupNames = new ArrayList<String>();
+    ArrayList<String> productNames = new ArrayList<String>();
 
-    public static void main(String[] args) throws SQLException {
+
+    public void obtainDataFromDb() throws SQLException {
         Connection connection = null;
 
         if (isDriverPresent()) return;
@@ -25,11 +29,25 @@ public class JDBCConnector {
         }
 
         checkForConnection(connection);
-        WorkWithDatabase workWithDatabase = new WorkWithDatabase(connection);
-        workWithDatabase.executeQuery();
+        CreateAndInsertData createAndInsertData = new CreateAndInsertData(connection);
+//        createAndInsertData.executeQuery();
+        GroupsFromDb groupsFromDb = new GroupsFromDb(connection);
+        groupNames = groupsFromDb.getDataFromDb();
+
+
+        try {
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+        } catch (SQLException e) {
+            System.out.println("Connection Failed! Check output console");
+            e.printStackTrace();
+            return;
+        }
+
+        ProductsFromDb productsFromDb = new ProductsFromDb(connection);
+        productNames = productsFromDb.getDataFromDb();
     }
 
-    private static boolean isDriverPresent() {
+    private boolean isDriverPresent() {
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
@@ -40,7 +58,7 @@ public class JDBCConnector {
         return false;
     }
 
-    private static void checkForConnection(Connection connection) {
+    private void checkForConnection(Connection connection) {
         if (connection != null) {
             System.out.println("You made it, take control over your database now!");
         } else {

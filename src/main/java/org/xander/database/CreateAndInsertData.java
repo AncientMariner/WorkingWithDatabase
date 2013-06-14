@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class WorkWithDatabase {
+public class CreateAndInsertData {
     private Connection connection;
 
     String createTable = "CREATE TABLE groups (id INT AUTO INCREMENT, " +
@@ -31,8 +31,9 @@ public class WorkWithDatabase {
     String insertIntoProducts3 = "INSERT INTO products (name, description, groups_id) VALUES ('LG', 'brilliant', 3);";
     String insertIntoProducts33 = "INSERT INTO products (name, description, groups_id) VALUES ('Samsung', 'good', 3);";
 
+    String selectingQuery = "select p.name from products p join groups g on g.id = p.groups_id where g.id = 2;";
 
-    public WorkWithDatabase(Connection connection) {
+    public CreateAndInsertData(Connection connection) {
         this.connection = connection;
     }
 
