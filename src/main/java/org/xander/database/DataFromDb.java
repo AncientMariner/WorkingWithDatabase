@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class CreateAndInsertData {
+public class DataFromDb {
     private Connection connection;
 
     String createTable = "CREATE TABLE groups (id INT AUTO INCREMENT, " +
@@ -33,7 +33,7 @@ public class CreateAndInsertData {
 
     String selectingQuery = "select p.name from products p join groups g on g.id = p.groups_id where g.id = 2;";
 
-    public CreateAndInsertData(Connection connection) {
+    public DataFromDb(Connection connection) {
         this.connection = connection;
     }
 

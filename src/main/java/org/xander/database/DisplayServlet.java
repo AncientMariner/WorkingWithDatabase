@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class MyServlet extends HttpServlet{
+public class DisplayServlet extends HttpServlet{
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         JDBCConnector jdbcConnector = new JDBCConnector();
