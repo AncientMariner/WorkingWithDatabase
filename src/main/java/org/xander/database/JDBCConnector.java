@@ -13,11 +13,30 @@ public class JDBCConnector {
     ArrayList<String> groupNames = new ArrayList<String>();
     ArrayList<String> productNames = new ArrayList<String>();
 
+    public void createDataOnDb() throws SQLException {
+        Connection connection = checkForConnection();
+        CreateAndInsertData createAndInsertData = new CreateAndInsertData(connection);
+        createAndInsertData.executeQuery();
+    }
 
-    public void obtainDataFromDb() throws SQLException {
+    public ArrayList<String> obtainGroupsFromDb() throws SQLException {
+        Connection connection = checkForConnection();
+        GroupsFromDb groupsFromDb = new GroupsFromDb(connection);
+        groupNames = groupsFromDb.getDataFromDb();
+        return groupNames;
+    }
+
+    public ArrayList<String> obtainProductsFromDb() throws SQLException {
+        Connection connection = checkForConnection();
+        ProductsFromDb productsFromDb = new ProductsFromDb(connection);
+        productNames = productsFromDb.getDataFromDb();
+        return productNames;
+    }
+
+    private Connection checkForConnection() {
         Connection connection = null;
 
-        if (isDriverPresent()) return;
+        if (isDriverPresent()) throw new RuntimeException();
         System.out.println("MySQL JDBC Driver Registered!");
 
         try {
@@ -25,26 +44,16 @@ public class JDBCConnector {
         } catch (SQLException e) {
             System.out.println("Connection Failed! Check output console");
             e.printStackTrace();
-            return;
+            throw new RuntimeException();
         }
 
-        checkForConnection(connection);
-        CreateAndInsertData createAndInsertData = new CreateAndInsertData(connection);
-//        createAndInsertData.executeQuery();
-        GroupsFromDb groupsFromDb = new GroupsFromDb(connection);
-        groupNames = groupsFromDb.getDataFromDb();
-
-
-        try {
-            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-        } catch (SQLException e) {
-            System.out.println("Connection Failed! Check output console");
-            e.printStackTrace();
-            return;
+        if (connection != null) {
+            System.out.println("You made it, take control over your database now!");
+        } else {
+            System.out.println("Failed to make connection!");
+            throw new RuntimeException();
         }
-
-        ProductsFromDb productsFromDb = new ProductsFromDb(connection);
-        productNames = productsFromDb.getDataFromDb();
+        return connection;
     }
 
     private boolean isDriverPresent() {
@@ -58,12 +67,4 @@ public class JDBCConnector {
         return false;
     }
 
-    private void checkForConnection(Connection connection) {
-        if (connection != null) {
-            System.out.println("You made it, take control over your database now!");
-        } else {
-            System.out.println("Failed to make connection!");
-            return;
-        }
-    }
 }

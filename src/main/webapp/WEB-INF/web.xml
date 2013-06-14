@@ -13,4 +13,13 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
         <servlet-name>MyServlet</servlet-name>
         <url-pattern>/test</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>resultViewer</servlet-name>
+        <jsp-file>/WEB-INF/pages/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>resultViewer</servlet-name>
+        <url-pattern>/result</url-pattern>
+    </servlet-mapping>
 </web-app>
