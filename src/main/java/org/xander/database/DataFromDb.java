@@ -1,8 +1,6 @@
 package org.xander.database;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DataFromDb {
     private Connection connection;
@@ -48,6 +46,32 @@ public class DataFromDb {
         } finally {
             if (statement != null)
                 statement.close();
+            if (connection != null)
+                connection.close();
+        }
+    }
+
+    public void executeQueryWithParameter() throws SQLException {
+        PreparedStatement preparedStatement = null;
+        String selectSQL = "select p.name from products p join groups g on g.id = p.groups_id where g.name = ?";
+        try {
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, 1001);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                String userid = rs.getString("USER_ID");
+                String username = rs.getString("USERNAME");
+
+                System.out.println("userid : " + userid);
+                System.out.println("username : " + username);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (preparedStatement != null)
+                preparedStatement.close();
             if (connection != null)
                 connection.close();
         }

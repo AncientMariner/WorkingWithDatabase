@@ -14,26 +14,26 @@ public class JDBCConnector {
     ArrayList<String> productNames = new ArrayList<String>();
 
     public void createDataOnDb() throws SQLException {
-        Connection connection = checkForConnection();
-        CreateAndInsertData createAndInsertData = new CreateAndInsertData(connection);
-        createAndInsertData.executeQuery();
+        Connection connection = getConnection();
+        DataFromDb dataFromDb = new DataFromDb(connection);
+        dataFromDb.executeQuery();
     }
 
     public ArrayList<String> obtainGroupsFromDb() throws SQLException {
-        Connection connection = checkForConnection();
+        Connection connection = getConnection();
         GroupsFromDb groupsFromDb = new GroupsFromDb(connection);
         groupNames = groupsFromDb.getDataFromDb();
         return groupNames;
     }
 
     public ArrayList<String> obtainProductsFromDb() throws SQLException {
-        Connection connection = checkForConnection();
+        Connection connection = getConnection();
         ProductsFromDb productsFromDb = new ProductsFromDb(connection);
         productNames = productsFromDb.getDataFromDb();
         return productNames;
     }
 
-    private Connection checkForConnection() {
+    private Connection getConnection() {
         Connection connection = null;
 
         if (isDriverPresent()) throw new RuntimeException();

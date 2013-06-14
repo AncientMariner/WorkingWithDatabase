@@ -5,12 +5,11 @@
 http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
     <servlet>
-        <servlet-name>MyServlet</servlet-name>
-        <servlet-class>org.xander.database.MyServlet</servlet-class>
+        <servlet-name>DisplayServlet</servlet-name>
+        <servlet-class>org.xander.database.DisplayServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
-        <servlet-name>MyServlet</servlet-name>
+        <servlet-name>DisplayServlet</servlet-name>
         <url-pattern>/test</url-pattern>
     </servlet-mapping>
 
@@ -21,5 +20,15 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <servlet-mapping>
         <servlet-name>resultViewer</servlet-name>
         <url-pattern>/result</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>SelectServlet</servlet-name>
+        <servlet-class>org.xander.database.SelectServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SelectServlet</servlet-name>
+        <url-pattern>/selectGroup.do</url-pattern>
     </servlet-mapping>
 </web-app>
