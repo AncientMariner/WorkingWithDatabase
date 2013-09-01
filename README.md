@@ -1,1 +1,1 @@
-This is working with database examples
+This is an example of working with database
